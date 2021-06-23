@@ -1,17 +1,12 @@
 //importing dependencies
-import express, { Request, Response } from 'express';
+import express from 'express';
+import { router } from './routes/login';
 
 //init server
 const app = express();
 
-//routes
-app.get('/', (req: Request, res: Response) => {
-  res.send(`
-        <div>
-          <h1>Hi there!</h1>
-        </div>
-    `);
-});
+//middlewares
+app.use(router);
 
 //listening
 const PORT = 4000;
