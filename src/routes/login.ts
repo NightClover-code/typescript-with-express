@@ -1,9 +1,7 @@
 //importing dependencies
-import { Router, Response, Request } from 'express';
-
-interface RequestWithBody extends Request {
-  body: { [key: string]: string | undefined };
-}
+import { Router, Response } from 'express';
+import { RequestWithBody } from '../interfaces';
+import { requireAuth } from '../middlewares';
 
 const router = Router();
 
@@ -61,6 +59,11 @@ router.get('/', (req: RequestWithBody, res: Response) => {
 router.get('/logout', (req: RequestWithBody, res: Response) => {
   req.session = undefined;
   res.redirect('/');
+});
+
+//protected route
+router.get('/protected', requireAuth, (req: RequestWithBody, res: Response) => {
+  res.send(`Welcome to protected route, bob!`);
 });
 
 export { router };
