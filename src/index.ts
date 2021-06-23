@@ -2,6 +2,7 @@
 import express from 'express';
 import { router } from './routes/login';
 import bodyParser from 'body-parser';
+import cookieSession from 'cookie-session';
 
 //init server
 const app = express();
@@ -10,6 +11,11 @@ const app = express();
 app.use(
   bodyParser.urlencoded({
     extended: true,
+  })
+);
+app.use(
+  cookieSession({
+    keys: ['bvpqosdivbomfqfdpq'],
   })
 );
 app.use(router);
