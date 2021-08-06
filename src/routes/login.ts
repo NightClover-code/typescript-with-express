@@ -1,12 +1,12 @@
 //importing dependencies
-import { Router, Response } from 'express';
+import { Router, Response, Request } from 'express';
 import { RequestWithBody } from '../interfaces';
 import { requireAuth } from '../middlewares';
 
 const router = Router();
 
 //get route
-router.get('/login', (req: RequestWithBody, res: Response) => {
+router.get('/login', (req: Request, res: Response) => {
   res.send(`
     <form method="POST">
         <div>
@@ -38,7 +38,7 @@ router.post('/login', (req: RequestWithBody, res: Response) => {
 });
 
 //root route
-router.get('/', (req: RequestWithBody, res: Response) => {
+router.get('/', (req: Request, res: Response) => {
   if (req.session?.loggedIn)
     res.send(`
         <div>
@@ -56,13 +56,13 @@ router.get('/', (req: RequestWithBody, res: Response) => {
 });
 
 //logout route
-router.get('/logout', (req: RequestWithBody, res: Response) => {
+router.get('/logout', (req: Request, res: Response) => {
   req.session = undefined;
   res.redirect('/');
 });
 
 //protected route
-router.get('/protected', requireAuth, (req: RequestWithBody, res: Response) => {
+router.get('/protected', requireAuth, (req: Request, res: Response) => {
   res.send(`Welcome to protected route, bob!`);
 });
 
