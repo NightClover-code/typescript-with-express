@@ -1,6 +1,25 @@
 import 'reflect-metadata';
+import { NextFunction, RequestHandler, Request, Response } from 'express';
 import { AppRouter } from '../../AppRouter';
 import { MetadataKeys, Methods } from './enums';
+
+function bodyValidators(keys: string): RequestHandler {
+  return function (req: Request, res: Response, next: NextFunction) {
+    if (!req.body) {
+      res.status(422).send('Invalid request');
+      return;
+    }
+
+    for (let key of keys) {
+      if (req.body[key]) {
+        res.status(422).send('Invalid request');
+        return;
+      }
+    }
+
+    next();
+  };
+}
 
 export function controller(routePrefix: string) {
   return function (target: Function) {
@@ -21,9 +40,19 @@ export function controller(routePrefix: string) {
       const middlewares =
         Reflect.getMetadata(MetadataKeys.MIDDLEWARE, target.prototype, key) ||
         [];
+      const requiredBodyProps =
+        Reflect.getMetadata(MetadataKeys.VALIDATOR, target.prototype, key) ||
+        [];
+
+      const validator = bodyValidators(requiredBodyProps);
 
       if (path) {
-        router[method](`${routePrefix}${path}`, ...middlewares, routeHandler);
+        router[method](
+          `${routePrefix}${path}`,
+          ...middlewares,
+          validator,
+          routeHandler
+        );
       }
     }
   };
