@@ -1,24 +1,8 @@
 //importing dependencies
-import { RequestWithBody } from '../interfaces';
 import { requireAuth } from '../middlewares';
 import { Router, Request, Response } from 'express';
 
 const router = Router();
-
-//post route
-router.post('/login', (req: RequestWithBody, res: Response) => {
-  const { email, password } = req.body;
-
-  if (
-    email &&
-    password &&
-    email === 'bob123@gmail.com' &&
-    password === 'bob123'
-  ) {
-    req.session = { loggedIn: true };
-    res.redirect('/');
-  } else res.send('Invalid email or password');
-});
 
 //root route
 router.get('/', (req: Request, res: Response) => {
