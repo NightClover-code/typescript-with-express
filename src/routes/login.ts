@@ -1,26 +1,8 @@
 //importing dependencies
-import { Router, Response, Request } from 'express';
 import { RequestWithBody } from '../interfaces';
 import { requireAuth } from '../middlewares';
 
 const router = Router();
-
-//get route
-router.get('/login', (req: Request, res: Response) => {
-  res.send(`
-    <form method="POST">
-        <div>
-            <label>Email</label>
-            <input name="email" type="email" />
-        </div>
-        <div>
-            <label>Password</label>
-            <input name="password" type="password" />
-        </div>
-        <button>Submit</button>
-    </form>
-  `);
-});
 
 //post route
 router.post('/login', (req: RequestWithBody, res: Response) => {
