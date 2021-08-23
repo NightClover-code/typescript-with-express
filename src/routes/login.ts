@@ -1,6 +1,7 @@
 //importing dependencies
 import { RequestWithBody } from '../interfaces';
 import { requireAuth } from '../middlewares';
+import { Router, Request, Response } from 'express';
 
 const router = Router();
 
