@@ -2,7 +2,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
-import { router } from './routes/login';
+import { AppRouter } from './AppRouter';
 import './controllers/LoginController';
 
 //init server
@@ -19,7 +19,7 @@ app.use(
     keys: ['qcscsq'],
   })
 );
-app.use(router);
+app.use(AppRouter.getInstance());
 
 //listening
 const PORT = 4000;
