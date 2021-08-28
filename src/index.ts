@@ -2,6 +2,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
+//importing controllers & router
 import { AppRouter } from './AppRouter';
 import './controllers/LoginController';
 import './controllers/RootController';
